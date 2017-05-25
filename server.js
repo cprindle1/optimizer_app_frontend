@@ -5,5 +5,5 @@ var port    = 8000;
 app.use(express.static('public'));
 
 app.listen(port, function() {
-  console.log("Noticeboard Frontend running on port: ", port);
+  console.log("Optimizer Frontend running on port: ", port);
 });

@@ -1,0 +1,100 @@
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+@import url('https://fonts.googleapis.com/css?family=Allerta+Stencil|Droid+Serif');
+*{
+  font-family: 'Allerta Stencil', sans-serif;
+}
+body{
+  background-color: #b5b5b7;
+
+}
+#showSelector{
+  width: 80%;
+  text-align: center;
+  margin: auto;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  background-color: #252839;
+  border-top: 3px solid #677077;
+}
+
+#statsBox{
+  margin: auto;
+  width: 80%;
+}
+.togglePos{
+  display: inline-block;
+  width: 19%;
+  cursor: pointer;
+  background-color: #f2b632;
+  color: #252839;
+  border-radius: 2px;
+}
+
+.showPlayersBox{
+  margin: auto;
+  height: 500px;
+  width: 100%;
+  overflow: auto;
+  background-color: #F5F5F5;
+
+}
+.playersBoxHeaders{
+  margin: auto;
+  width: 100%;
+  border-bottom: 2px solid #252839;
+  border-top: 3px solid #677077;
+  background-color: #252839;
+  color: #f2b632;
+}
+i{
+  margin-right: 10px;
+  float: right;
+}
+
+.dataHeaders{
+  width: 100%;
+}
+.playerDataHeader{
+  display: inline-block;
+  width: 17%;
+  cursor: pointer;
+
+}
+
+.playerDetail{
+  display: inline-block;
+  width: 17%;
+  text-align: left;
+  font-size: 14px;
+  font-family: 'Droid Serif', serif;
+}
+
+.playerDataHeaderGame{
+  display: inline-block;
+  width: 22%;
+  cursor: pointer;
+
+}
+
+.playerDetailGame{
+  display: inline-block;
+  width: 22%;
+  text-align: left;
+  font-size: 14px;
+  font-family: 'Droid Serif', serif;
+
+}
+
+.playerDataHeaderName{
+  display: inline-block;
+  width: 22%;
+  cursor: pointer;
+}
+
+.playerDetailName{
+  display: inline-block;
+  width: 22%;
+  font-size: 14px;
+  font-family: 'Droid Serif', serif;
+
+}

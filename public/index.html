@@ -5,9 +5,61 @@
     <title>Optimizer</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script type="text/javascript" src="/app.js"></script>
+    <link rel = "stylesheet" href="style.css" />
   </head>
   <body ng-controller = "mainController as ctrl">
-    HI
-    {{ctrl.message}}
+    <div id="showSelector">
+      <div class = "togglePos" ng-click="ctrl.setShow('QB')">Quarterbacks</div>
+      <div class = "togglePos" ng-click="ctrl.setShow('RB')">Running Backs</div>
+      <div class = "togglePos" ng-click="ctrl.setShow('WR')">Wide Receivers</div>
+      <div class = "togglePos" ng-click="ctrl.setShow('TE')">Tight Ends</div>
+      <div class = "togglePos" ng-click="ctrl.setShow('D')">Defense</div>
+    </div></br>
+    <div id = "statsBox">
+    <div class = "playersBoxHeaders">
+      <div id="dataHeaders">
+        <div ng-click = "ctrl.sortTableBy('Name')" class = 'playerDataHeaderName'>Name <i class="fa fa-sort" aria-hidden="true"></i></div>
+        <div ng-click = "ctrl.sortTableBy('Game')" class = 'playerDataHeaderGame'>Game Info <i class="fa fa-sort" aria-hidden="true"></i></div>
+        <div ng-click = "ctrl.sortTableBy('Value')" class = 'playerDataHeader'>$ Per Point <i class="fa fa-sort" aria-hidden="true"></i></div>
+        <div ng-click = "ctrl.sortTableBy('Salary')" class = 'playerDataHeader'>Salary <i class="fa fa-sort" aria-hidden="true"></i></div>
+        <div ng-click = "ctrl.sortTableBy('projection')" class = 'playerDataHeader'>Projection <i class="fa fa-sort" aria-hidden="true"></i></div>
+      </div>
+    </div>
+    <div class = "showPlayersBox">
+    <div ng-if="ctrl.showPlayers=='QB'" ng-repeat="qb in ctrl.QBs | orderBy:ctrl.sortby">
+      <div class = 'playerDetailName'>{{qb.Name}}</div>
+      <div class = 'playerDetailGame'>{{qb.GameInfo}}</div>
+      <div class = 'playerDetail'>{{qb.Value | currency}}</div>
+      <div class = 'playerDetail'>{{qb.Salary | currency}}</div>
+      <div class = 'playerDetail'>{{qb.projection}}</div>
+    </div>
+    <div ng-if="ctrl.showPlayers=='RB'"ng-repeat="rb in ctrl.RBs | orderBy: '-projection'">
+      <div class = 'playerDetailName'>{{rb.Name}}</div>
+      <div class = 'playerDetailGame'>{{rb.GameInfo}}</div>
+      <div class = 'playerDetail'>{{rb.Value | currency}}</div>
+      <div class = 'playerDetail'>{{rb.Salary | currency}}</div>
+      <div class = 'playerDetail'>{{rb.projection}}</div>    </div>
+    <div ng-if="ctrl.showPlayers=='WR'" ng-repeat="wr in ctrl.WRs | orderBy: '-projection'">
+      <div class = 'playerDetailName'>{{wr.Name}}</div>
+      <div class = 'playerDetailGame'>{{wr.GameInfo}}</div>
+      <div class = 'playerDetail'>{{wr.Value | currency}}</div>
+      <div class = 'playerDetail'>{{wr.Salary | currency}}</div>
+      <div class = 'playerDetail'>{{wr.projection}}</div>    </div>
+    <div ng-if="ctrl.showPlayers=='TE'" ng-repeat="te in ctrl.TEs | orderBy: '-projection'">
+      <div class = 'playerDetailName'>{{te.Name}}</div>
+      <div class = 'playerDetailGame'>{{te.GameInfo}}</div>
+      <div class = 'playerDetail'>{{te.Value | currency}}</div>
+      <div class = 'playerDetail'>{{te.Salary | currency}}</div>
+      <div class = 'playerDetail'>{{te.projection}}</div>    </div>
+    <div ng-if="ctrl.showPlayers=='D'" ng-repeat="dst in ctrl.Ds | orderBy: '-projection'">
+      <div class = 'playerDetailName'>{{dst.Name}}</div>
+      <div class = 'playerDetailGame'>{{dst.GameInfo}}</div>
+      <div class = 'playerDetail'>{{dst.Value | currency}}</div>
+      <div class = 'playerDetail'>{{dst.Salary | currency}}</div>
+      <div class = 'playerDetail'>{{dst.projection}}</div>    </div>
+  </div>
+</div>
+
+
   </body>
 </html>
