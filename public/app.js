@@ -1,7 +1,7 @@
-var app = angular.module('optimizer', []);
+const app = angular.module('optimizer', []);
 
 app.controller('mainController', ['$http', function($http){
-  this.message = "WORKS";
+  this.aboutModal = false;
   this.players = [];
   this.QBs = [];
   this.WRs = [];
@@ -10,7 +10,6 @@ app.controller('mainController', ['$http', function($http){
   this.Ds = [];
   this.showPlayers = 'QB';
   this.sortby = '-projection';
-
 
   this.setShow = function(position){
     this.showPlayers = position;
@@ -24,7 +23,7 @@ app.controller('mainController', ['$http', function($http){
     }
   };
 
-  var controller = this;
+  const controller = this;
   $http({
     method: 'GET',
     url: 'http://localhost:3000/players',

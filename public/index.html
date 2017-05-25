@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html ng-app = "optimizer">
-  <head>
-    <meta charset="utf-8">
-    <title>Optimizer</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-    <script type="text/javascript" src="/app.js"></script>
-    <link rel = "stylesheet" href="style.css" />
-  </head>
-  <body ng-controller = "mainController as ctrl">
+<head>
+  <meta charset="utf-8">
+  <title>Optimizer</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+  <script type="text/javascript" src="/app.js"></script>
+  <link rel = "stylesheet" href="style.css" />
+</head>
+<body ng-controller = "mainController as ctrl">
+  <header id = 'header'>
+    <h1 id = "FF">Fantasy Football </h1><h1> Lineup Optimizer</h1>
+    <img ng-click = "ctrl.aboutModal = !ctrl.aboutModal" id="football" src="/img/football.svg" type="image/svg+xml"></img>
+<div ng-if = "ctrl.aboutModal" id="modal">
+<div id="modal-text-area">
+  <div id="modal-footer">
+    <h2 ng-click = "ctrl.aboutModal = !ctrl.aboutModal" id="closeBtn">X</h2>
+  </div>
+  <h1 id="modal-header">How do I use this site?</h1>
+  <p>Discover recommendations of beer styles based on your preferences!</p><p>Use the sliders to set ranges for IBU, ABV and SRM to filter the list.  Click on a style for more information. &hearts; a style to save it to your profile.  Click on the Brewery information to find locations serving and making beer near you!</p>
+  <h1 id="modal-header">What do these terms mean?</h1>
+  <p><strong>IBU - </strong>International Bitterness Units scale is a gauge of beer's bitterness. What IBUs measure are the parts per million of isohumulone found in a beer. Isohumulone is the acid found in hops that gives beer its bitter bite.  Though the IBU scale can be used as a general guideline for taste, with lower IBUs corresponding to less bitterness and vice versa, it's important to note that malt and other flavors can mask the taste of bitterness in beer.</p>
+  <p>IBU are measured on a scale beginning at 0. There's no ceiling on the IBU scale. There are documented beers that have rated to over a 1000 IBU's, but it's rare to see anything nearly that high.</p>
+  <p>Almost all the beer you're ever going to drink will have an IBU rating between 5 and 120.</p>
+  <p><strong>ABV - </strong>Unlike hard liquor, beers aren't measured by proof, but most commonly by Alcohol By Volume. This number simply lets you know what percentage of your beer is alcohol. Brewers take samples of beer as it ferments to see how much sugar the yeast is converting into alcohol, and tweak the batch to get to the final level of booziness they're looking for.   Simply put, the higher the ABV, the more drunk you’ll get.</p>
+  <p>Beer is 2%–12% (usually 4%–6%).</p>
+  <p><strong>SRM - </strong>Standard Reference Method measures the color of the beer in your glass—the higher the number, the darker the beer. But color does not necessarily equal flavor: while it's easy to make overarching judgments and think that pale gold beers are light in flavor, amber beers are sweet and malty, and near-black beers are super roasty.  The range is defined from 0 - 40, from a pale lager at the lightest to an imperial stout at the darkest.  Dark colors past 25 are often indiscernable.</p>
+</div>
+</div>
+  </header></br>
+  <div id="container">
     <div id="showSelector">
       <div class = "togglePos" ng-click="ctrl.setShow('QB')">Quarterbacks</div>
       <div class = "togglePos" ng-click="ctrl.setShow('RB')">Running Backs</div>
@@ -15,51 +36,51 @@
       <div class = "togglePos" ng-click="ctrl.setShow('TE')">Tight Ends</div>
       <div class = "togglePos" ng-click="ctrl.setShow('D')">Defense</div>
     </div></br>
+    <div id="dataHeaders" class = "playersBoxHeaders">
+      <div ng-click = "ctrl.sortTableBy('Name')" class = 'playerDataHeaderName'>Name<i class="fa fa-sort" aria-hidden="true"></i></div>
+      <div ng-click = "ctrl.sortTableBy('GameInfo')" class = 'playerDataHeaderGame'>Game Info<i class="fa fa-sort" aria-hidden="true"></i></div>
+      <div ng-click = "ctrl.sortTableBy('Value')" class = 'playerDataHeader'>$ Per Point<i class="fa fa-sort" aria-hidden="true"></i></div>
+      <div ng-click = "ctrl.sortTableBy('Salary')" class = 'playerDataHeader'>Salary<i class="fa fa-sort" aria-hidden="true"></i></div>
+      <div ng-click = "ctrl.sortTableBy('projection')" class = 'playerDataHeader'>Projection<i class="fa fa-sort" aria-hidden="true"></i></div>
+    </div>
     <div id = "statsBox">
-    <div class = "playersBoxHeaders">
-      <div id="dataHeaders">
-        <div ng-click = "ctrl.sortTableBy('Name')" class = 'playerDataHeaderName'>Name <i class="fa fa-sort" aria-hidden="true"></i></div>
-        <div ng-click = "ctrl.sortTableBy('Game')" class = 'playerDataHeaderGame'>Game Info <i class="fa fa-sort" aria-hidden="true"></i></div>
-        <div ng-click = "ctrl.sortTableBy('Value')" class = 'playerDataHeader'>$ Per Point <i class="fa fa-sort" aria-hidden="true"></i></div>
-        <div ng-click = "ctrl.sortTableBy('Salary')" class = 'playerDataHeader'>Salary <i class="fa fa-sort" aria-hidden="true"></i></div>
-        <div ng-click = "ctrl.sortTableBy('projection')" class = 'playerDataHeader'>Projection <i class="fa fa-sort" aria-hidden="true"></i></div>
-      </div>
+      <table  class = "showPlayersBox">
+        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="ctrl.showPlayers=='QB'" ng-repeat="qb in ctrl.QBs | orderBy:ctrl.sortby">
+          <td class = 'playerDetailName'>{{qb.Name}}</td>
+          <td class = 'playerDetailGame'>{{qb.GameInfo}}</td>
+          <td class = 'playerDetail'>{{qb.Value | currency}}</td>
+          <td class = 'playerDetail'>{{qb.Salary | currency}}</td>
+          <td class = 'playerDetail'>{{qb.projection}}</td>
+        </tr>
+        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="ctrl.showPlayers=='RB'" ng-repeat="rb in ctrl.RBs | orderBy:ctrl.sortby">
+          <td class = 'playerDetailName'>{{rb.Name}}</td>
+          <td class = 'playerDetailGame'>{{rb.GameInfo}}</td>
+          <td class = 'playerDetail'>{{rb.Value | currency}}</td>
+          <td class = 'playerDetail'>{{rb.Salary | currency}}</td>
+          <td class = 'playerDetail'>{{rb.projection}}</td>
+        </tr>
+        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="ctrl.showPlayers=='WR'" ng-repeat="wr in ctrl.WRs | orderBy:ctrl.sortby">
+          <td class = 'playerDetailName'>{{wr.Name}}</td>
+          <td class = 'playerDetailGame'>{{wr.GameInfo}}</td>
+          <td class = 'playerDetail'>{{wr.Value | currency}}</td>
+          <td class = 'playerDetail'>{{wr.Salary | currency}}</td>
+          <td class = 'playerDetail'>{{wr.projection}}</td>
+        </tr>
+        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="ctrl.showPlayers=='TE'" ng-repeat="te in ctrl.TEs | orderBy:ctrl.sortby">
+          <td class = 'playerDetailName'>{{te.Name}}</td>
+          <td class = 'playerDetailGame'>{{te.GameInfo}}</td>
+          <td class = 'playerDetail'>{{te.Value | currency}}</td>
+          <td class = 'playerDetail'>{{te.Salary | currency}}</td>
+          <td class = 'playerDetail'>{{te.projection}}</td>
+        </tr>
+        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="ctrl.showPlayers=='D'" ng-repeat="dst in ctrl.Ds | orderBy:ctrl.sortby">
+          <td class = 'playerDetailName'>{{dst.Name}}</td>
+          <td class = 'playerDetailGame'>{{dst.GameInfo}}</td>
+          <td class = 'playerDetail'>{{dst.Value | currency}}</td>
+          <td class = 'playerDetail'>{{dst.Salary | currency}}</td>
+          <td class = 'playerDetail'>{{dst.projection}}</td>
+        </tr>
+      </table>
     </div>
-    <div class = "showPlayersBox">
-    <div ng-if="ctrl.showPlayers=='QB'" ng-repeat="qb in ctrl.QBs | orderBy:ctrl.sortby">
-      <div class = 'playerDetailName'>{{qb.Name}}</div>
-      <div class = 'playerDetailGame'>{{qb.GameInfo}}</div>
-      <div class = 'playerDetail'>{{qb.Value | currency}}</div>
-      <div class = 'playerDetail'>{{qb.Salary | currency}}</div>
-      <div class = 'playerDetail'>{{qb.projection}}</div>
-    </div>
-    <div ng-if="ctrl.showPlayers=='RB'"ng-repeat="rb in ctrl.RBs | orderBy: '-projection'">
-      <div class = 'playerDetailName'>{{rb.Name}}</div>
-      <div class = 'playerDetailGame'>{{rb.GameInfo}}</div>
-      <div class = 'playerDetail'>{{rb.Value | currency}}</div>
-      <div class = 'playerDetail'>{{rb.Salary | currency}}</div>
-      <div class = 'playerDetail'>{{rb.projection}}</div>    </div>
-    <div ng-if="ctrl.showPlayers=='WR'" ng-repeat="wr in ctrl.WRs | orderBy: '-projection'">
-      <div class = 'playerDetailName'>{{wr.Name}}</div>
-      <div class = 'playerDetailGame'>{{wr.GameInfo}}</div>
-      <div class = 'playerDetail'>{{wr.Value | currency}}</div>
-      <div class = 'playerDetail'>{{wr.Salary | currency}}</div>
-      <div class = 'playerDetail'>{{wr.projection}}</div>    </div>
-    <div ng-if="ctrl.showPlayers=='TE'" ng-repeat="te in ctrl.TEs | orderBy: '-projection'">
-      <div class = 'playerDetailName'>{{te.Name}}</div>
-      <div class = 'playerDetailGame'>{{te.GameInfo}}</div>
-      <div class = 'playerDetail'>{{te.Value | currency}}</div>
-      <div class = 'playerDetail'>{{te.Salary | currency}}</div>
-      <div class = 'playerDetail'>{{te.projection}}</div>    </div>
-    <div ng-if="ctrl.showPlayers=='D'" ng-repeat="dst in ctrl.Ds | orderBy: '-projection'">
-      <div class = 'playerDetailName'>{{dst.Name}}</div>
-      <div class = 'playerDetailGame'>{{dst.GameInfo}}</div>
-      <div class = 'playerDetail'>{{dst.Value | currency}}</div>
-      <div class = 'playerDetail'>{{dst.Salary | currency}}</div>
-      <div class = 'playerDetail'>{{dst.projection}}</div>    </div>
-  </div>
-</div>
-
-
   </body>
-</html>
+  </html>
