@@ -3,9 +3,10 @@
 @import url('https://fonts.googleapis.com/css?family=Special+Elite');
 
 *{
-  font-family: 'Allerta Stencil', sans-serif;
+  /*font-family: 'Allerta Stencil', sans-serif;*/
 }
 body{
+  font-family: 'Allerta Stencil', sans-serif;
   background-color: #FEFFEA;
   margin: 0;
 
@@ -14,6 +15,7 @@ h1{
   font-family: 'Special Elite', cursive;
   text-align: center;
 }
+
 
 .light{
   background-color: #C9C9C9;
@@ -47,16 +49,30 @@ color: #FEFFEA;
   margin-top: 10px;
 }
 
+#subContainer{
+  width: 95%;
+  margin: auto;
+}
+
 #container{
   width: 85%;
   /*height: 95%;*/
   margin:  auto;
   padding-bottom: 15px;
   background-color: #C9C9C9;
+  min-width: 785px;
+}
+#bottomContainer{
+  width: 85%;
+  height: 175px;
+  margin:  auto;
+  padding-bottom: 15px;
+  background-color: #C9C9C9;
   border-bottom: 5px solid #FCFC62;
   min-width: 785px;
-
+  font-family: 'Droid Serif', serif;
 }
+
 #showSelector{
   width: 100%;
   text-align: center;
@@ -66,6 +82,51 @@ color: #FEFFEA;
   background-color: #424242;
   border-top: 3px solid #FCFC62;
   min-width: 785px;
+}
+#plus{
+  cursor: pointer;
+  color: #FCFC62;
+}
+
+#bottomItem{
+  padding: 2px;
+  font-size: 14px;
+}
+
+#bottomHeader{
+  width: 25%;
+  float: left;
+  background-color: #424242;
+  color: #FCFC62;
+  text-align: left;
+  font-family: 'Allerta Stencil', sans-serif;
+  padding-bottom: 3px;
+}
+
+#bottomContent{
+  width: 25%;
+  float: left;
+  height: 150px;
+  font-family: 'Droid Serif', serif;
+  background-color: #C9C9C9;
+  overflow: auto;
+  overflow-x: hidden;
+}
+#otherStuff{
+  width: 49%;
+  height: 150px;
+  float: left;
+  background-color: #C9C9C9;
+  padding: 2px;
+}
+#otherStuffHeader{
+  float: left;
+  padding: 2px;
+  width: 49%;
+  background-color: #424242;
+  color: #FCFC62;
+  text-align: left;
+  font-family: 'Allerta Stencil', sans-serif;
 }
 
 
@@ -117,7 +178,7 @@ i{
 .playerDataHeader{
   margin: 2px;
   display: inline-block;
-  width: 17%;
+  width: 13%;
   cursor: pointer;
 
 }
@@ -125,16 +186,33 @@ i{
 .playerDetail{
   margin: 2px;
   display: inline-block;
-  width: 17%;
+  width: 14%;
   text-align: left;
   font-size: 14px;
   font-family: 'Droid Serif', serif;
 }
+.playerRemoveHeader{
+  margin: 2px;
+  display: inline-block;
+  width: 9%;
+}
+.removePlayer{
+  margin: 2px;
+  display: inline-block;
+  width: 9%;
+  text-align: center;
+  font-size: 14px;
+  color: darkred;
+  font-weight: bold;
+  font-family: 'Allerta Stencil', sans-serif;
+  cursor: pointer;
+}
+
 
 .playerDataHeaderGame{
   margin: 2px;
   display: inline-block;
-  width: 22%;
+  width: 20%;
   cursor: pointer;
 
 }
@@ -142,7 +220,7 @@ i{
 .playerDetailGame{
   margin: 2px;
   display: inline-block;
-  width: 22%;
+  width: 21%;
   text-align: left;
   font-size: 14px;
   font-family: 'Droid Serif', serif;
@@ -159,7 +237,7 @@ i{
 .playerDetailName{
   margin: 2px;
   display: inline-block;
-  width: 22%;
+  width: 23%;
   font-size: 14px;
   font-family: 'Droid Serif', serif;
 

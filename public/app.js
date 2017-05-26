@@ -1,52 +1,114 @@
-const app = angular.module('optimizer', []);
+const app = angular.module('optimizer', ['ngStorage']);
 
-app.controller('mainController', ['$http', function($http){
-  this.aboutModal = false;
-  this.players = [];
-  this.QBs = [];
-  this.WRs = [];
-  this.RBs = [];
-  this.TEs = [];
-  this.Ds = [];
-  this.showPlayers = 'QB';
-  this.sortby = '-projection';
+app.controller('mainController', function($http, $scope, $localStorage){
+  $scope.$storage = $localStorage.$default({
+    aboutModal: false,
+    players: [],
+    QBs: [],
+    WRs: [],
+    RBs: [],
+    TEs: [],
+    Ds: [],
+    showPlayers: 'QB',
+    sortby: '-projection',
+    lastSort: '-projection',
+    sortAsc: false,
+    sortCategory: 'projection',
+    removedPlayers: []
+  });
 
   this.setShow = function(position){
-    this.showPlayers = position;
+    $localStorage.showPlayers = position;
   };
 
-  this.sortTableBy = function(sort){
-    if(sort == 'projection' || sort == 'Salary' || sort == 'Value'){
-      this.sortby = "-"+sort;
-    }else {
-      this.sortby = sort;
+  this.removePlayer = function(player, position){
+    console.log(player);
+    $localStorage.removedPlayers.push(player);
+    function findPlayer(p){
+      return p.id == player.id;
+    }
+    if(position == 'QB'){
+      $localStorage.QBs.splice($localStorage.QBs.indexOf($localStorage.QBs.find(findPlayer)),1);
+    }else if (position == 'RB') {
+      $localStorage.RBs.splice($localStorage.RBs.indexOf($localStorage.RBs.find(findPlayer)),1);
+    }else if (position == 'WR') {
+      $localStorage.WRs.splice($localStorage.WRs.indexOf($localStorage.WRs.find(findPlayer)),1);
+    }else if (position == 'TE') {
+      $localStorage.TEs.splice($localStorage.TEs.indexOf($localStorage.TEs.find(findPlayer)),1);
+    }else if (position == 'D') {
+      $localStorage.Ds.splice($localStorage.Ds.indexOf($localStorage.Ds.find(findPlayer)),1);
+    }
+    console.log($localStorage.removedPlayers);
+  };
+
+  this.addPlayer = function(player){
+    console.log(player);
+    function findPlayer(p){
+      return p.id == player.id;
+    }
+    $localStorage.removedPlayers.splice($localStorage.removedPlayers.indexOf($localStorage.removedPlayers.find(findPlayer)),1);
+    if(player.Position == 'QB'){
+      $localStorage.QBs.push(player);
+    }else if (player.Position == 'RB') {
+      $localStorage.RBs.push(player);
+    }else if (player.Position == 'WR') {
+      $localStorage.WRs.push(player);
+    }else if (player.Position == 'TE') {
+      $localStorage.TEs.push(player);
+    }else if (player.Position == 'DST') {
+      $localStorage.Ds.push(player);
     }
   };
 
-  const controller = this;
+  this.sortTableBy = function(sort){
+    if($localStorage.lastSort == sort){
+      $localStorage.sortby = sort;
+      $localStorage.sortAsc = true;
+      $localStorage.lastSort = '-'+sort;
+      $localStorage.sortCategory = sort.replace('-', '');
+    }else {
+      $localStorage.sortby = '-'+sort;
+      $localStorage.sortAsc = false;
+      $localStorage.lastSort = sort;
+      $localStorage.sortCategory = sort;
+      $localStorage.sortCategory = sort;
+    }
+  };
   $http({
     method: 'GET',
     url: 'http://localhost:3000/players',
   }).then(function(response){
-    this.players = response.data;
-    this.players.forEach(function(player){
+    console.log($localStorage.players.length);
+    if($localStorage.players.length !== 0){
+      console.log("in local already");
+      //need to update local
+    }else{
+    $localStorage.players = response.data;
+    console.log($localStorage.players);
+    $localStorage.players.forEach(function(player){
       if(player.projection !== null){
         player.projection = parseFloat(player.projection);
       }else{
         player.projection = 0;
       }
+      if(player.Value !== null){
+        player.Value = parseFloat(player.Value);
+      }else{
+        player.Value = 0;
+      }
       if(player.Position === 'QB'){
-        controller.QBs.push(player);
+        $localStorage.QBs.push(player);
       }else if (player.Position === 'WR') {
-        controller.WRs.push(player);
+        $localStorage.WRs.push(player);
       }else if (player.Position === 'RB') {
-        controller.RBs.push(player);
+        $localStorage.RBs.push(player);
       }else if (player.Position === 'TE') {
-        controller.TEs.push(player);
+        $localStorage.TEs.push(player);
       }else if (player.Position === 'DST') {
-        controller.Ds.push(player);
+        $localStorage.Ds.push(player);
       }
     });
-  }.bind(this));
+  }
+  });
 
-}]);
+});
