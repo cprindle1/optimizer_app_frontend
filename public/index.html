@@ -80,11 +80,11 @@
   </header></br>
   <div id="container">
     <div id="showSelector">
-      <div class = "togglePos" ng-click="ctrl.setShow('QB')">Quarterbacks</div>
-      <div class = "togglePos" ng-click="ctrl.setShow('RB')">Running Backs</div>
-      <div class = "togglePos" ng-click="ctrl.setShow('WR')">Wide Receivers</div>
-      <div class = "togglePos" ng-click="ctrl.setShow('TE')">Tight Ends</div>
-      <div class = "togglePos" ng-click="ctrl.setShow('D')">Defense</div>
+      <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'QB'}" ng-click="ctrl.setShow('QB')">Quarterbacks</div>
+      <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'RB'}" ng-click="ctrl.setShow('RB')">Running Backs</div>
+      <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'WR'}" ng-click="ctrl.setShow('WR')">Wide Receivers</div>
+      <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'TE'}" ng-click="ctrl.setShow('TE')">Tight Ends</div>
+      <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'D'}" ng-click="ctrl.setShow('D')">Defense</div>
     </div></br>
     <div id="dataHeaders" class = "playersBoxHeaders">
       <div class = 'playerRemoveHeader'>Remove</div>
