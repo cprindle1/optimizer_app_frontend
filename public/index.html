@@ -17,15 +17,64 @@
         <div id="modal-footer">
           <h2 ng-click = "$storage.aboutModal = !$storage.aboutModal" id="closeBtn">X</h2>
         </div>
-        <h1 id="modal-header">How do I use this site?</h1>
-        <p>Discover recommendations of beer styles based on your preferences!</p><p>Use the sliders to set ranges for IBU, ABV and SRM to filter the list.  Click on a style for more information. &hearts; a style to save it to your profile.  Click on the Brewery information to find locations serving and making beer near you!</p>
-        <h1 id="modal-header">What do these terms mean?</h1>
-        <p><strong>IBU - </strong>International Bitterness Units scale is a gauge of beer's bitterness. What IBUs measure are the parts per million of isohumulone found in a beer. Isohumulone is the acid found in hops that gives beer its bitter bite.  Though the IBU scale can be used as a general guideline for taste, with lower IBUs corresponding to less bitterness and vice versa, it's important to note that malt and other flavors can mask the taste of bitterness in beer.</p>
-        <p>IBU are measured on a scale beginning at 0. There's no ceiling on the IBU scale. There are documented beers that have rated to over a 1000 IBU's, but it's rare to see anything nearly that high.</p>
-        <p>Almost all the beer you're ever going to drink will have an IBU rating between 5 and 120.</p>
-        <p><strong>ABV - </strong>Unlike hard liquor, beers aren't measured by proof, but most commonly by Alcohol By Volume. This number simply lets you know what percentage of your beer is alcohol. Brewers take samples of beer as it ferments to see how much sugar the yeast is converting into alcohol, and tweak the batch to get to the final level of booziness they're looking for.   Simply put, the higher the ABV, the more drunk you’ll get.</p>
-        <p>Beer is 2%–12% (usually 4%–6%).</p>
-        <p><strong>SRM - </strong>Standard Reference Method measures the color of the beer in your glass—the higher the number, the darker the beer. But color does not necessarily equal flavor: while it's easy to make overarching judgments and think that pale gold beers are light in flavor, amber beers are sweet and malty, and near-black beers are super roasty.  The range is defined from 0 - 40, from a pale lager at the lightest to an imperial stout at the darkest.  Dark colors past 25 are often indiscernable.</p>
+        <h1 id="modal-header">Scoring Rules</h1>
+        <h4>ROSTER REQUIREMENTS:</h4><p>
+          Rosters will consist of 9 players and must include players from at least 2 different NFL teams, and representing at least 2 different NFL games.  The 9 roster positions are: QB, RB1, RB2, WR1, WR2, WR3, TE, FLEX (RB/WR/TE), and DST.
+        </p>
+        <h4>SCORING RULES</h4><ul>
+          <li>Offensive players will accumulate points as follows:
+            <ul>
+              <li>Passing TD = +4PTs</li>
+              <li>25 Passing Yards = +1PT (+0.04PT/ per yard is awarded)</li>
+              <li>300+ Yard Passing Game = +3PTs</li>
+              <li>Interception = -1PT</li>
+              <li>10 Rushing Yards = +1PT (+0.1PT per yard is awarded)</li>
+              <li>Rushing TD = +6PTs</li>
+              <li>100+ Yard Rushing Game = +3PTs</li>
+              <li>10 Receiving Yards = +1PT (+0.1PT per yard is awarded)</li>
+              <li>Reception = +1PT</li>
+              <li>Receiving TD = +6PTs</li>
+              <li>100+ Yard Receiving Game = +3PTs</li>
+              <li>Punt/Kickoff Return/FG Return for TD = +6PTs</li>
+              <li>Fumble Lost = -1PT</li>
+              <li>2 Point Conversion (Pass, Run, or Catch) = +2PTs</li>
+              <li>Offensive Fumble Recovery TD = +6PTs</li>
+            </ul>
+          </li>
+          <li>Defense/Special Teams will accumulate points as follows:
+            <ul>
+              <li>Sack = +1PT</li>
+              <li>Interception = +2PTs</li>
+              <li>Fumble Recovery = +2PTs</li>
+              <li>Kickoff Return TD = +6PTs</li>
+              <li>Punt Return TD = +6PTs</li>
+              <li>FG Return TD = +6PTs</li>
+              <li>Interception Return TD = +6PTs</li>
+              <li>Fumble Recovery TD = +6PTs</li>
+              <li>Blocked Punt or FG Return TD = +6PTs</li>
+              <li>Safety = +2PTs</li>
+              <li>Blocked Kick = +2PTs</li>
+              <li>2 Point Conversion/ Extra-point Return = +2PTs</li>
+              <li>0 Points Allowed = +10PTs</li>
+              <li>1-6 Points Allowed = +7PTs</li>
+              <li>7-13 Points Allowed = +4PTs</li>
+              <li>14-20 Points Allowed = +1PT</li>
+              <li>21-27 Points Allowed = 0PTs</li>
+              <li>28-34 Points Allowed = -1PT</li>
+              <li>35+ Points Allowed = -4PTs</li>
+            </ul>
+            <li id = "note">The following scoring plays will result in Points Allowed (PA) by your Defense/Special Teams (DST):</li>
+            <ul>
+              <li>Rushing TDs, Passing TDs, Offensive Fumble Recovery TDs, Punt Return TDs, Kick Return TDs, FG Return TDs, Blocked FG TDs, Blocked Punt TDs</li>
+              <li>2pt conversions</li>
+              <li>2 Point Conversion/Extra-point Returns</li>
+              <li>Extra-points</li>
+              <li>Field-goals</li>
+              </ul>
+          </li>
+        </ul>
+
+        <p>*Note: Points Allowed (PA) only includes points surrendered while DST is on the field - doesn't include points given up by team's offense (i.e. points off offensive turnovers).</p>
       </div>
     </div>
   </header></br>
@@ -52,58 +101,27 @@
     </div>
     <div id = "statsBox">
       <table  class = "showPlayersBox">
-        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="$storage.showPlayers=='QB'" ng-repeat="qb in $storage.QBs | orderBy:$storage.sortby">
-          <td ng-click = "ctrl.removePlayer(qb, 'QB')" class = 'removePlayer'>X</td>
-          <td class = 'playerDetailName'>{{qb.Name}}</td>
-          <td class = 'playerDetailGame'>{{qb.GameInfo}}</td>
-          <td class = 'playerDetail'>{{qb.Value | currency}}</td>
-          <td class = 'playerDetail'>{{qb.Salary | currency}}</td>
-          <td class = 'playerDetail'>{{qb.projection}}</td>
-        </tr>
-        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="$storage.showPlayers=='RB'" ng-repeat="rb in $storage.RBs | orderBy:$storage.sortby">
-          <td ng-click = "ctrl.removePlayer(rb, 'RB')" class = 'removePlayer'>X</td>
-          <td class = 'playerDetailName'>{{rb.Name}}</td>
-          <td class = 'playerDetailGame'>{{rb.GameInfo}}</td>
-          <td class = 'playerDetail'>{{rb.Value | currency}}</td>
-          <td class = 'playerDetail'>{{rb.Salary | currency}}</td>
-          <td class = 'playerDetail'>{{rb.projection}}</td>
-        </tr>
-        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="$storage.showPlayers=='WR'" ng-repeat="wr in $storage.WRs | orderBy:$storage.sortby">
-          <td ng-click = "ctrl.removePlayer(wr, 'WR')" class = 'removePlayer'>X</td>
-          <td class = 'playerDetailName'>{{wr.Name}}</td>
-          <td class = 'playerDetailGame'>{{wr.GameInfo}}</td>
-          <td class = 'playerDetail'>{{wr.Value | currency}}</td>
-          <td class = 'playerDetail'>{{wr.Salary | currency}}</td>
-          <td class = 'playerDetail'>{{wr.projection}}</td>
-        </tr>
-        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="$storage.showPlayers=='TE'" ng-repeat="te in $storage.TEs | orderBy:$storage.sortby">
-          <td ng-click = "ctrl.removePlayer(te, 'TE')" class = 'removePlayer'>X</td>
-          <td class = 'playerDetailName'>{{te.Name}}</td>
-          <td class = 'playerDetailGame'>{{te.GameInfo}}</td>
-          <td class = 'playerDetail'>{{te.Value | currency}}</td>
-          <td class = 'playerDetail'>{{te.Salary | currency}}</td>
-          <td class = 'playerDetail'>{{te.projection}}</td>
-        </tr>
-        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-if="$storage.showPlayers=='D'" ng-repeat="dst in $storage.Ds | orderBy:$storage.sortby">
-          <td ng-click = "ctrl.removePlayer(dst, 'D')" class = 'removePlayer'>X</td>
-          <td class = 'playerDetailName'>{{dst.Name}}</td>
-          <td class = 'playerDetailGame'>{{dst.GameInfo}}</td>
-          <td class = 'playerDetail'>{{dst.Value | currency}}</td>
-          <td class = 'playerDetail'>{{dst.Salary | currency}}</td>
-          <td class = 'playerDetail'>{{dst.projection}}</td>
+        <tr ng-class-odd = "'dark'" ng-class-even = "'light'" class = "playerRow" ng-repeat="player in $storage.players | filter: {Position: $storage.showPlayers} | orderBy:$storage.sortby">
+          <td ng-click = "ctrl.removePlayer(player, $storage.showPlayers)" class = 'removePlayer'><i class="fa fa-times removeX" aria-hidden="true"></i>
+</td>
+          <td class = 'playerDetailName'>{{player.Name}}</td>
+          <td class = 'playerDetailGame'>{{player.GameInfo}}</td>
+          <td class = 'playerDetail'>{{player.Value | currency}}</td>
+          <td class = 'playerDetail'>{{player.Salary | currency}}</td>
+          <td class = 'playerDetail'>{{player.projection}}</td>
         </tr>
       </table>
     </div>
   </div>
   <div id="bottomContainer">
     <div id = "subContainer">
-      <div id = 'bottomHeader'>Teams</div>
-      <div id = 'bottomHeader'>Games</div>
-      <div id = 'bottomHeader'>Times</div>
-      <div id = 'bottomHeader'>Removed Players</div>
+      <div id = 'bottomHeader'>&nbspTeams</div>
+      <div id = 'bottomHeader'>&nbspGames</div>
+      <div id = 'bottomHeader'>&nbspTimes</div>
+      <div id = 'bottomHeader'>&nbspRemoved Players</div>
       <div id="bottomContent">
-        <div id = "bottomItem" ng-repeat = "player in $storage.removedPlayers">
-          <div >{{player.Name}}<i id = "plus" ng-click = "ctrl.addPlayer(player)" class="fa fa-plus" aria-hidden="true"></i>
+        <div id = "bottomItem">
+          <div id = "bottomItem"  ng-repeat = "team in $storage.teams | orderBy:'name'">{{team.name}}<i ng-if="!team.toggled" ng-click = "toggleX(team); ctrl.removeTeam(team.name)" class="fa fa-times X" aria-hidden="true"></i><i ng-if="team.toggled" ng-click = "toggleX(team); ctrl.replaceTeam(team.name)" class="fa fa-times plus" aria-hidden="true"></i>
           </div>
         </div>
       </div>
@@ -114,9 +132,7 @@
         </div>
       </div>
       <div id="bottomContent">
-        <div id = "bottomItem" ng-repeat = "player in $storage.removedPlayers">
-          <div >{{player.Name}}<i id = "plus" ng-click = "ctrl.addPlayer(player)" class="fa fa-plus" aria-hidden="true"></i>
-          </div>
+        <div id = "bottomItem"  ng-repeat = "time in $storage.times">{{time.time}}<i ng-if="!time.toggled" ng-click = "toggleX(time); ctrl.removeTime(time.time)" class="fa fa-times X" aria-hidden="true"></i><i ng-if="time.toggled" ng-click = "toggleX(time); ctrl.replaceTime(time.time)" class="fa fa-times plus" aria-hidden="true"></i>
         </div>
       </div>
       <div id="bottomContent">

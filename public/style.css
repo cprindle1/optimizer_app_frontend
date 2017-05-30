@@ -15,7 +15,24 @@ h1{
   font-family: 'Special Elite', cursive;
   text-align: center;
 }
-
+.X{
+  padding-right: 1px;
+  cursor: pointer;
+  margin: 0;
+  color: darkred;
+}
+.plus{
+  width: 11px;
+  height: 11px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  cursor: pointer;
+  width: 11px;
+  height: 11px;
+  margin: 0;
+  color: #FCFC62;
+}
 
 .light{
   background-color: #C9C9C9;
@@ -84,8 +101,10 @@ color: #FEFFEA;
   min-width: 785px;
 }
 #plus{
-  cursor: pointer;
   color: #FCFC62;
+  width: 11px;
+  height: 11px;
+  cursor: pointer;
 }
 
 #bottomItem{
@@ -112,22 +131,7 @@ color: #FEFFEA;
   overflow: auto;
   overflow-x: hidden;
 }
-#otherStuff{
-  width: 49%;
-  height: 150px;
-  float: left;
-  background-color: #C9C9C9;
-  padding: 2px;
-}
-#otherStuffHeader{
-  float: left;
-  padding: 2px;
-  width: 49%;
-  background-color: #424242;
-  color: #FCFC62;
-  text-align: left;
-  font-family: 'Allerta Stencil', sans-serif;
-}
+
 
 
 #statsBox{
@@ -135,6 +139,11 @@ color: #FEFFEA;
   width: 95%;
   height: 500px;
   overflow-y: scroll;
+}
+
+.removeX{
+  display: inline-block;
+  width: 100%;
 }
 .togglePos:hover{
   background-color: #A3A3A3;
@@ -201,6 +210,7 @@ i{
   display: inline-block;
   width: 9%;
   text-align: center;
+  align: center;
   font-size: 14px;
   color: darkred;
   font-weight: bold;
@@ -244,6 +254,9 @@ i{
 }
 
 /*MODAL*/
+#note{
+  list-style: none;
+}
 #modal{
   background-color: rgba(0,0,0,0.5);
   position: fixed;
@@ -255,31 +268,32 @@ i{
   /*display: none;*/
 }
 #modal-text-area {
-  background-color: #FEF7E9;
+  background-color: #FEFFEA;
   height: 625px;
   width: 600px;
-  border: 5px solid #36080B;
+  border: 5px solid #424242;
   margin: 150px auto;
   overflow: auto;
   padding: 0px 20px 5px 20px;
   box-shadow: 0 5px 10px 5px rgba(0, 0, 0, 0.7);
-  color: #36080B;
-  font-family: 'PT Sans Narrow', sans-serif;
-  font-size: 20px;
+  color: #424242;
+  font-family: 'Droid Serif', serif;
+  font-size: 18px;
 }
 #modal-footer {
   text-align: right;
 }
 
 #closeBtn {
-  color: #36080B;
+  color: #424242;
   cursor: pointer;
-  font-family: 'Sancreek', cursive;
+  font-family: 'Special Elite', cursive;
   float: right;
 
 }
 
 #modal-header {
   text-align: center;
-  font-family: 'Sancreek', cursive;
+  font-family: 'Special Elite', cursive;
+
 }
