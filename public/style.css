@@ -41,6 +41,13 @@ h1{
   background-color: #FEFFEA;
 }
 
+.lightBottom{
+  background-color: #C9C9C9;
+}
+.darkBottom{
+  background-color: #A3A3A3;
+}
+
 #FF{
 justify-content: flex-start;;
 color: #FEFFEA;
@@ -108,7 +115,7 @@ color: #FEFFEA;
 }
 
 #bottomItem{
-  padding: 2px;
+  padding: 3px;
   font-size: 14px;
 }
 
@@ -123,7 +130,8 @@ color: #FEFFEA;
 }
 
 #bottomContent{
-  width: 25%;
+  margin: .25%;
+  width: 24.5%;
   float: left;
   height: 150px;
   font-family: 'Droid Serif', serif;
@@ -140,6 +148,30 @@ color: #FEFFEA;
   height: 500px;
   overflow-y: scroll;
 }
+
+.bottomButtons{
+  width: 95%;
+  color: #424242;
+  font-size: 14px;
+  background-color: #FCFC62;
+  font-family: 'Allerta Stencil', sans-serif;
+  border-radius: 3px;
+  margin: 5px;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  border: 1px solid #424242;
+}
+.bottomButtons:hover{
+  background-color: #A3A3A3;
+  color: #FCFC62;
+}
+.bottomButtons:active{
+  background-color: #424242;
+  color: #FCFC62;
+}
+
 
 .removeX{
   display: inline-block;

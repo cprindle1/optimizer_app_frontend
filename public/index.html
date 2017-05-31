@@ -116,28 +116,30 @@
   <div id="bottomContainer">
     <div id = "subContainer">
       <div id = 'bottomHeader'>&nbspTeams</div>
-      <div id = 'bottomHeader'>&nbspGames</div>
       <div id = 'bottomHeader'>&nbspTimes</div>
       <div id = 'bottomHeader'>&nbspRemoved Players</div>
+      <div id = 'bottomHeader'>&nbsp</div>
+
+      <div id="bottomContent">
+          <div id = "bottomItem"  ng-class-odd = "'darkBottom'" ng-class-even = "'lightBottom'" ng-repeat = "team in $storage.teams | orderBy:'name'">{{team.name}}<i ng-if="!team.toggled" ng-click = "toggleX(team); ctrl.removeTeam(team.name)" class="fa fa-times X" aria-hidden="true"></i><i ng-if="team.toggled" ng-click = "toggleX(team); ctrl.replaceTeam(team.name)" class="fa fa-times plus" aria-hidden="true"></i>
+          </div>
+      </div>
+
+      <div id="bottomContent">
+        <div id = "bottomItem" ng-class-odd = "'darkBottom'" ng-class-even = "'lightBottom'" ng-repeat = "time in $storage.times">{{time.time}}<i ng-if="!time.toggled" ng-click = "toggleX(time); ctrl.removeTime(time.time)" class="fa fa-times X" aria-hidden="true"></i><i ng-if="time.toggled" ng-click = "toggleX(time); ctrl.replaceTime(time.time)" class="fa fa-times plus" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div id="bottomContent">
+        <div id = "bottomItem" ng-class-odd = "'darkBottom'" ng-class-even = "'lightBottom'" ng-repeat = "player in $storage.removedPlayers">
+          <div >{{player.Name}}<i id = "plus" ng-click = "ctrl.addPlayer(player)" class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
       <div id="bottomContent">
         <div id = "bottomItem">
-          <div id = "bottomItem"  ng-repeat = "team in $storage.teams | orderBy:'name'">{{team.name}}<i ng-if="!team.toggled" ng-click = "toggleX(team); ctrl.removeTeam(team.name)" class="fa fa-times X" aria-hidden="true"></i><i ng-if="team.toggled" ng-click = "toggleX(team); ctrl.replaceTeam(team.name)" class="fa fa-times plus" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-      <div id="bottomContent">
-        <div id = "bottomItem" ng-repeat = "player in $storage.removedPlayers">
-          <div >{{player.Name}}<i id = "plus" ng-click = "ctrl.addPlayer(player)" class="fa fa-plus" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-      <div id="bottomContent">
-        <div id = "bottomItem"  ng-repeat = "time in $storage.times">{{time.time}}<i ng-if="!time.toggled" ng-click = "toggleX(time); ctrl.removeTime(time.time)" class="fa fa-times X" aria-hidden="true"></i><i ng-if="time.toggled" ng-click = "toggleX(time); ctrl.replaceTime(time.time)" class="fa fa-times plus" aria-hidden="true"></i>
-        </div>
-      </div>
-      <div id="bottomContent">
-        <div id = "bottomItem" ng-repeat = "player in $storage.removedPlayers">
-          <div >{{player.Name}}<i id = "plus" ng-click = "ctrl.addPlayer(player)" class="fa fa-plus" aria-hidden="true"></i>
+          <div >
+            <div class = "bottomButtons">Optimize</div>
+            <div class = "bottomButtons" ng-click = 'ctrl.addAll()'>Clear Filters</div>
           </div>
         </div>
       </div>

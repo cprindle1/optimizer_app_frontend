@@ -62,7 +62,32 @@ app.controller('mainController', function($http, $scope, $localStorage){
     $localStorage.players.splice($localStorage.players.indexOf($localStorage.players.find(findPlayer)),1);
   };
 
+  this.addAll = function(){
+    for(let i=0; i<$localStorage.times.length; i++){
+        $localStorage.times[i].toggled = false;
+    }
+    for(let i=0; i<$localStorage.teams.length; i++){
+        $localStorage.teams[i].toggled = false;
+    }
+    for(let i=$localStorage.removedPlayers.length-1; i>=0; i--){
+        $localStorage.players.push($localStorage.removedPlayers[i]);
+        $localStorage.removedPlayers.splice(i,1);
+    }
+
+  }
+
   this.addPlayer = function(player){
+    for(let i=0; i<$localStorage.times.length; i++){
+      if(player.gameTime == $localStorage.times[i].time && $localStorage.times[i].toggled){
+        $localStorage.times[i].toggled = !$localStorage.times[i].toggled;
+      }
+    }
+    for(let i=0; i<$localStorage.teams.length; i++){
+      if(player.team == $localStorage.teams[i].name && $localStorage.teams[i].toggled){
+        console.log($localStorage.teams[i]);
+        $localStorage.teams[i].toggled = !$localStorage.teams[i].toggled;
+      }
+    }
     function findPlayer(p){
       return p.id == player.id;
     }
