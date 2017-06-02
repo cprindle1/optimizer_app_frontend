@@ -128,9 +128,9 @@
 </td>
           <td class = 'playerDetailName'>{{player.Name}}</td>
           <td class = 'playerDetailGame'>{{player.GameInfo}}</td>
-          <td class = 'playerDetail'>{{player.Value | currency}}</td>
-          <td class = 'playerDetail'>{{player.Salary | currency}}</td>
-          <td class = 'playerDetail'>{{player.projection}}</td>
+          <td class = 'playerDetail'>{{player.Value | currency:undefined:2}}</td>
+          <td class = 'playerDetail'>{{player.Salary | currency:undefined:0}}</td>
+          <td class = 'playerDetail'>{{player.projection | number : 2}}</td>
         </tr>
       </table>
     </div>

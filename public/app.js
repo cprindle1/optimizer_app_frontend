@@ -361,8 +361,8 @@ app.controller('mainController', function($http, $scope, $localStorage){
   };
   $http({
     method: 'GET',
-    url: 'http://localhost:3000/players',
-    // url: 'https://optimizerapi.herokuapp.com/players',
+    // url: 'http://localhost:3000/players',
+    url: 'https://optimizerapi.herokuapp.com/players',
 
   }).then(function(response){
     if($localStorage.players.length !== 0){
