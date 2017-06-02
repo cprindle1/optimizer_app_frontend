@@ -149,6 +149,62 @@ color: #FEFFEA;
   overflow-y: scroll;
 }
 
+#closeOptimized{
+  width: 100%;
+  height: 15px;
+  text-align: right;
+  color: #FCFC62;
+  cursor: pointer;
+  margin-right: 20px;
+  font-family: 'Allerta Stencil', sans-serif;
+}
+.animate-show {
+  height: 100px;
+  opacity:1;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition:all linear .75s;
+  transition:all linear .75s;
+}
+
+.animate-show.ng-hide {
+  height: 0px;
+  opacity:0;
+}
+
+.optimized{
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  background-color: #424242;
+  border-top: 3px solid #FCFC62;
+  min-width: 785px;
+}
+
+.optiPlayer{
+  display: inline-block;
+  width: 10.5%;
+  color: #FCFC62;
+  font-size: 10px;
+  margin: 0;
+}
+
+#linupWrapper{
+  width: 100%;
+}
+
+#totals{
+  display: inline-block;
+  padding: 10px;
+  color: #FCFC62;
+
+}
+
+
 .bottomButtons{
   width: 95%;
   color: #424242;

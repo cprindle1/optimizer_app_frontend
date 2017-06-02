@@ -5,6 +5,7 @@
   <title>Optimizer</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
   <script src="https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js"></script>
+<script src="angular-animate.js"></script>
   <script type="text/javascript" src="/app.js"></script>
   <link rel = "stylesheet" href="style.css" />
 </head>
@@ -85,7 +86,25 @@
       <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'WR'}" ng-click="ctrl.setShow('WR')">Wide Receivers</div>
       <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'TE'}" ng-click="ctrl.setShow('TE')">Tight Ends</div>
       <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'D'}" ng-click="ctrl.setShow('D')">Defense</div>
-    </div></br>
+    </div>
+    <div ng-show="ctrl.optimized" class="animate-show optimized">
+      <div id="closeOptimized" ng-hide="!ctrl.optimized" ng-click="ctrl.closeOptimized()"><i class="fa fa-times" aria-hidden="true"></i>
+      </div>
+      <div id="lineupWrapper">
+        <div ng-repeat="player in ctrl.tempLineup"    class="optiPlayer">
+            {{player.Position}}</br>
+            {{player.Name}}</br>
+            {{player.projection}}</br>
+        </div></br>
+        <div id='totals'>
+          Team Budget: {{ctrl.totalBudget | currency}}
+        </div>
+        <div id='totals'>
+        Team Projection: {{ctrl.totalProjection}}
+      </div>
+      </div>
+    </div>
+    </br>
     <div id="dataHeaders" class = "playersBoxHeaders">
       <div class = 'playerRemoveHeader'>Remove</div>
 
@@ -130,7 +149,7 @@
         </div>
       </div>
       <div id="bottomContent">
-        <div id = "bottomItem" ng-class-odd = "'darkBottom'" ng-class-even = "'lightBottom'" ng-repeat = "player in $storage.removedPlayers">
+        <div id = "bottomItem" ng-class-odd = "'darkBottom'" ng-class-even = "'lightBottom'" ng-repeat = "player in $storage.removedPlayers | orderBy: 'Name'">
           <div >{{player.Name}}<i id = "plus" ng-click = "ctrl.addPlayer(player)" class="fa fa-plus" aria-hidden="true"></i>
           </div>
         </div>
@@ -138,7 +157,7 @@
       <div id="bottomContent">
         <div id = "bottomItem">
           <div >
-            <div class = "bottomButtons">Optimize</div>
+            <div class = "bottomButtons" ng-click = 'ctrl.optimize()'>Optimize</div>
             <div class = "bottomButtons" ng-click = 'ctrl.addAll()'>Clear Filters</div>
           </div>
         </div>

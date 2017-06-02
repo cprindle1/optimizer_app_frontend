@@ -1,4 +1,4 @@
-const app = angular.module('optimizer', ['ngStorage']);
+const app = angular.module('optimizer', ['ngStorage', 'ngAnimate']);
 
 app.controller('mainController', function($http, $scope, $localStorage){
   $scope.$storage = $localStorage.$default({
@@ -11,8 +11,23 @@ app.controller('mainController', function($http, $scope, $localStorage){
     sortCategory: 'projection',
     removedPlayers: [],
     times: [],
-    teams: []
+    teams: [],
+    lineups: []
   });
+  this.optimized = false;
+  this.QBs = [];
+  this.RBs = [];
+  this.WRs = [];
+  this.TEs = [];
+  this.Fs = [];
+  this.Ds = [];
+  this.tempLineup = [];
+  this.totalProjection = 0;
+  this.totalBudget = 0;
+
+  this.closeOptimized = function(){
+    this.optimized=false;
+  }
 
   this.setShow = function(position){
     $localStorage.showPlayers = position;
@@ -95,6 +110,155 @@ app.controller('mainController', function($http, $scope, $localStorage){
       $localStorage.players.push(player);
   };
 
+
+  this.checkBudget = function(lineup){
+    let budget = 0;
+    for(let i=0; i<lineup.length; i++){
+      budget+=parseInt(lineup[i].Salary);
+    }
+    this.totalBudget = budget;
+    console.log(budget);
+    return (budget<=50000);
+  };
+
+  this.findReplacement = function(positionArray, pos){
+    for(let a=positionArray.length-1; a>=0; a--){
+      if(parseInt(positionArray[a].Salary) < parseInt(this.tempLineup[pos].Salary)){
+        return positionArray[a];
+        break;
+      }
+    }
+  };
+
+  this.findBestReplacement = function(replacements){
+    console.log('findBestReplacement');
+    let replacementValues = [];
+    let maxRV = 0;
+    let replacementIndex = 0;
+    for(let i=0; i<replacements.length; i++){
+      replacementValues.push((parseFloat(this.tempLineup[i].Salary)-parseFloat(replacements[i].Salary))/((parseFloat(this.tempLineup[i].projection)-parseFloat(replacements[i].projection))+1));
+    }
+    for(let i=0; i<replacementValues.length; i++){
+      if(replacementValues[i]>maxRV){
+        maxRV = replacementValues[i];
+        replacementIndex = i;
+      }
+    }
+    return(replacementIndex);
+  };
+
+  this.replacePlayer = function(i, replacements){
+    this.tempLineup[i] = replacements[i];
+  };
+
+  this.replaceOne = function(){
+    let replacements = [];
+    replacements.push(this.findReplacement(this.QBs, 0));
+    replacements.push(this.findReplacement(this.RBs, 1));
+    replacements.push(this.findReplacement(this.RBs, 2));
+    replacements.push(this.findReplacement(this.WRs, 3));
+    replacements.push(this.findReplacement(this.WRs, 4));
+    replacements.push(this.findReplacement(this.WRs, 5));
+    replacements.push(this.findReplacement(this.TEs, 6));
+    replacements.push(this.findReplacement(this.Ds, 7));
+    replacements.push(this.findReplacement(this.Fs, 8));
+    this.replacePlayer(this.findBestReplacement(replacements), replacements);
+  };
+
+  this.optimize = function(){
+    this.QBs = [];
+    this.RBs = [];
+    this.WRs = [];
+    this.TEs = [];
+    this.Ds = [];
+    this.Fs = [];
+    this.tempLineup= [];
+    this.totalProjection = 0;
+    this.totalBudget = 0;
+
+
+    for(let i=0; i<$localStorage.players.length; i++){
+      if($localStorage.players[i].Position == 'QB' && parseFloat($localStorage.players[i].projection) > 0){
+        this.QBs.push($localStorage.players[i]);
+      }else if($localStorage.players[i].Position == 'RB' && parseFloat($localStorage.players[i].projection) > 0){
+        this.RBs.push($localStorage.players[i]);
+      }else if($localStorage.players[i].Position == 'WR' && parseFloat($localStorage.players[i].projection) > 0){
+        this.WRs.push($localStorage.players[i]);
+      }else if($localStorage.players[i].Position == 'TE' && parseFloat($localStorage.players[i].projection) > 0){
+        this.TEs.push($localStorage.players[i]);
+      }else if($localStorage.players[i].Position == 'DST' && parseFloat($localStorage.players[i].projection) > 0){
+        this.Ds.push($localStorage.players[i]);
+      }
+      if($localStorage.players[i].Position !== 'QB' && $localStorage.players[i].Position !== 'DST' && parseFloat($localStorage.players[i].projection) > 0){
+        this.Fs.push($localStorage.players[i]);
+      }
+    }
+    console.log(this.WRs);
+    let compare = function(a, b){
+      return a.projection - b.projection;
+    };
+    this.QBs.sort(compare);
+    this.RBs.sort(compare);
+    this.WRs.sort(compare);
+    this.TEs.sort(compare);
+    this.Fs.sort(compare);
+    this.Ds.sort(compare);
+    this.tempLineup.push(this.QBs[this.QBs.length-1]);
+    this.QBs.pop();
+    this.tempLineup.push(this.RBs[this.RBs.length-1]);
+    this.RBs.pop();
+    this.tempLineup.push(this.RBs[this.RBs.length-1]);
+    this.RBs.pop();
+    this.tempLineup.push(this.WRs[this.WRs.length-1]);
+    this.WRs.pop();
+    this.tempLineup.push(this.WRs[this.WRs.length-1]);
+    this.WRs.pop();
+    this.tempLineup.push(this.WRs[this.WRs.length-1]);
+    this.WRs.pop();
+    this.tempLineup.push(this.TEs[this.TEs.length-1]);
+    this.TEs.pop();
+    this.tempLineup.push(this.Ds[this.Ds.length-1]);
+    this.Ds.pop();
+    for(let i=this.Fs.length-1; i>=0; i--){
+      let found = false;
+      for(let j=this.tempLineup.length-1; j>=0; j--){
+        if(this.Fs[i].id == this.tempLineup[j].id){
+          found = true;
+          this.Fs.splice(i,1);
+          break;
+        }
+      }
+      if(!found){
+        this.tempLineup.push(this.Fs[i]);
+        let player = this.Fs[i]
+        this.Fs.splice(i,1);
+        function findPlayer(p){
+          return p.id == player;
+        }
+        if(player.Position == 'RB'){
+          this.RBs.splice(this.RBs.indexOf(this.RBs.find(findPlayer)),1);
+        }else if(player.Position == 'WR'){
+          this.WRs.splice(this.WRs.indexOf(this.WRs.find(findPlayer)),1);
+        }else if(player.Position == 'TE'){
+          this.TEs.splice(this.TEs.indexOf(this.TEs.find(findPlayer)),1);
+        }
+        break;
+      }
+    }
+    while(!this.checkBudget(this.tempLineup)){
+      this.replaceOne();
+    }
+    for(let i=0; i<this.tempLineup.length; i++){
+      this.totalProjection+=this.tempLineup[i].projection;
+    }
+    this.flex = this.tempLineup[8];
+    this.flex.Position = 'Flex';
+    this.tempLineup[8] = this.tempLineup[7];
+    this.tempLineup[7] = this.flex;
+    this.optimized = true;
+
+  };
+
   this.sortTableBy = function(sort){
     if($localStorage.lastSort == sort){
       $localStorage.sortby = sort;
@@ -111,8 +275,8 @@ app.controller('mainController', function($http, $scope, $localStorage){
   };
   $http({
     method: 'GET',
-    // url: 'http://localhost:3000/players',
-    url: 'https://optimizerapi.herokuapp.com/players',
+    url: 'http://localhost:3000/players',
+    // url: 'https://optimizerapi.herokuapp.com/players',
 
   }).then(function(response){
     if($localStorage.players.length !== 0){
