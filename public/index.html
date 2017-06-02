@@ -93,13 +93,13 @@
         <div ng-repeat="player in ctrl.tempLineup" class="optiPlayer">
             {{player.Position}}</br>
             {{player.Name}}</br>
-            {{player.projection}}</br>
+            {{player.projection | number : 2}}</br>
         </div></br>
         <div id='totals'>
-          Team Budget: {{ctrl.totalBudget | currency}}
+          Team Budget: {{ctrl.totalBudget | currency:undefined:0}}
         </div>
         <div id='totals'>
-        Team Projection: {{ctrl.totalProjection}}
+        Team Projection: {{ctrl.totalProjection | number : 2}}
       </div>
       </div>
       <div id='totals' ng-if="ctrl.optimizeError">
