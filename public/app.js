@@ -269,8 +269,6 @@ app.controller('mainController', function($http, $scope, $localStorage){
 
     if(this.QBs.length > 0 && this.RBs.length > 0 && this.WRs.length > 0 && this.TEs.length > 0 && this.Ds.length > 0 && this.Fs.length > 0){
 
-
-
     let compare = function(a, b){
       return a.projection - b.projection;
     };
@@ -359,6 +357,7 @@ app.controller('mainController', function($http, $scope, $localStorage){
       $localStorage.sortCategory = sort;
     }
   };
+  controller = this;
   $http({
     method: 'GET',
     // url: 'http://localhost:3000/players',
@@ -366,6 +365,8 @@ app.controller('mainController', function($http, $scope, $localStorage){
 
   }).then(function(response){
     if($localStorage.players.length !== 0){
+      controller.optimize();
+
       //check for updates
     }else{
       $localStorage.players = response.data;
@@ -410,8 +411,9 @@ app.controller('mainController', function($http, $scope, $localStorage){
           player.Value = 0;
         }
       });
+      controller.optimize();
     }
   });
   $localStorage.teams.sort();
-  this.optimize();
+
 });
