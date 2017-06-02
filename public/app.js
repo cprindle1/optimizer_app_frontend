@@ -69,12 +69,12 @@ app.controller('mainController', function($http, $scope, $localStorage){
   };
 
   this.removePlayer = function(player, position){
-    console.log(position);
     $localStorage.removedPlayers.push(player);
     function findPlayer(p){
       return p.id == player.id;
     }
     $localStorage.players.splice($localStorage.players.indexOf($localStorage.players.find(findPlayer)),1);
+    this.optimize();
   };
 
   this.addAll = function(){
@@ -88,7 +88,7 @@ app.controller('mainController', function($http, $scope, $localStorage){
         $localStorage.players.push($localStorage.removedPlayers[i]);
         $localStorage.removedPlayers.splice(i,1);
     }
-
+    this.optimize();
   }
 
   this.addPlayer = function(player){
@@ -99,7 +99,6 @@ app.controller('mainController', function($http, $scope, $localStorage){
     }
     for(let i=0; i<$localStorage.teams.length; i++){
       if(player.team == $localStorage.teams[i].name && $localStorage.teams[i].toggled){
-        console.log($localStorage.teams[i]);
         $localStorage.teams[i].toggled = !$localStorage.teams[i].toggled;
       }
     }
@@ -107,7 +106,8 @@ app.controller('mainController', function($http, $scope, $localStorage){
       return p.id == player.id;
     }
     $localStorage.removedPlayers.splice($localStorage.removedPlayers.indexOf($localStorage.removedPlayers.find(findPlayer)),1);
-      $localStorage.players.push(player);
+    $localStorage.players.push(player);
+    this.optimize();
   };
 
 
@@ -117,7 +117,6 @@ app.controller('mainController', function($http, $scope, $localStorage){
       budget+=parseInt(lineup[i].Salary);
     }
     this.totalBudget = budget;
-    console.log(budget);
     return (budget<=50000);
   };
 
@@ -128,10 +127,10 @@ app.controller('mainController', function($http, $scope, $localStorage){
         break;
       }
     }
+    return this.tempLineup[pos];
   };
 
   this.findBestReplacement = function(replacements){
-    console.log('findBestReplacement');
     let replacementValues = [];
     let maxRV = 0;
     let replacementIndex = 0;
@@ -148,7 +147,79 @@ app.controller('mainController', function($http, $scope, $localStorage){
   };
 
   this.replacePlayer = function(i, replacements){
+
+    let compare = function(a, b){
+      return a.projection - b.projection;
+    };
+
+    if(this.tempLineup[i].Position == 'QB'){
+      this.QBs.push(this.tempLineup[i]);
+      this.QBs.sort(compare);
+    }else if(this.tempLineup[i].Position == 'RB'){
+      this.RBs.push(this.tempLineup[i]);
+      this.RBs.sort(compare);
+    }else if(this.tempLineup[i].Position == 'WR'){
+      this.WRs.push(this.tempLineup[i]);
+      this.WRs.sort(compare);
+    }else if(this.tempLineup[i].Position == 'TE'){
+      this.TEs.push(this.tempLineup[i]);
+      this.TEs.sort(compare);
+    }else if(this.tempLineup[i].Position == 'DST'){
+      this.Ds.push(this.tempLineup[i]);
+      this.Ds.sort(compare);
+    }
+    if(this.tempLineup.Position != 'QB' && this.tempLineup.Position != 'DST'){
+      this.Fs.push(this.tempLineup[i]);
+      this.Fs.sort(compare);
+    }
+
     this.tempLineup[i] = replacements[i];
+
+
+    if(replacements[i].Position == 'QB'){
+      for(let j = 0; j<this.QBs.length; j++){
+        if(replacements[i] == this.QBs[j]){
+          this.QBs.splice(j,1);
+          break;
+        }
+      }
+    }else if(replacements[i].Position == 'RB'){
+      for(let j = 0; j<this.RBs.length; j++){
+        if(replacements[i] == this.RBs[j]){
+          this.RBs.splice(j,1);
+          break;
+        }
+      }
+    }else if(replacements[i].Position == 'WR'){
+      for(let j = 0; j<this.WRs.length; j++){
+        if(replacements[i] == this.WRs[j]){
+          this.WRs.splice(j,1);
+          break;
+        }
+      }
+    }else if(replacements[i].Position == 'TE'){
+      for(let j = 0; j<this.TEs.length; j++){
+        if(replacements[i] == this.TEs[j]){
+          this.TEs.splice(j,1);
+          break;
+        }
+      }
+    }else if(replacements[i].Position == 'DST'){
+      for(let j = 0; j<this.Ds.length; j++){
+        if(replacements[i] == this.Ds[j]){
+          this.Ds.splice(j,1);
+          break;
+        }
+      }
+    }
+    if(replacements[i].Position != 'QB' && replacements[i].Position != 'DST'){
+      for(let j = 0; j<this.Fs.length; j++){
+        if(replacements[i] == this.Fs[j]){
+          this.Fs.splice(j,1);
+          break;
+        }
+      }
+    }
   };
 
   this.replaceOne = function(){
@@ -175,6 +246,8 @@ app.controller('mainController', function($http, $scope, $localStorage){
     this.tempLineup= [];
     this.totalProjection = 0;
     this.totalBudget = 0;
+    this.optimizeError = false;
+
 
 
     for(let i=0; i<$localStorage.players.length; i++){
@@ -193,7 +266,11 @@ app.controller('mainController', function($http, $scope, $localStorage){
         this.Fs.push($localStorage.players[i]);
       }
     }
-    console.log(this.WRs);
+
+    if(this.QBs.length > 0 && this.RBs.length > 0 && this.WRs.length > 0 && this.TEs.length > 0 && this.Ds.length > 0 && this.Fs.length > 0){
+
+
+
     let compare = function(a, b){
       return a.projection - b.projection;
     };
@@ -245,17 +322,26 @@ app.controller('mainController', function($http, $scope, $localStorage){
         break;
       }
     }
+    // let looped = 0;
     while(!this.checkBudget(this.tempLineup)){
       this.replaceOne();
+      // looped++;
+      // if(looped>10){
+      //   break;
+      // }
     }
     for(let i=0; i<this.tempLineup.length; i++){
       this.totalProjection+=this.tempLineup[i].projection;
     }
+
     this.flex = this.tempLineup[8];
-    this.flex.Position = 'Flex';
+    // this.flex.Position = 'Flex';
     this.tempLineup[8] = this.tempLineup[7];
     this.tempLineup[7] = this.flex;
     this.optimized = true;
+  }else{
+    this.optimizeError = true;
+  }
 
   };
 
@@ -327,4 +413,5 @@ app.controller('mainController', function($http, $scope, $localStorage){
     }
   });
   $localStorage.teams.sort();
+  this.optimize();
 });

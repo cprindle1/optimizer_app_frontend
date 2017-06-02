@@ -15,10 +15,9 @@
     <img ng-click = "$storage.aboutModal = !$storage.aboutModal" id="football" src="/img/football.svg" type="image/svg+xml"></img>
     <div ng-if = "$storage.aboutModal" id="modal">
       <div id="modal-text-area">
-        <div id="modal-footer">
-          <h2 ng-click = "$storage.aboutModal = !$storage.aboutModal" id="closeBtn">X</h2>
-        </div>
-        <h1 id="modal-header">Scoring Rules</h1>
+        <div id="modal-header"><h1 id = "scoring">Scoring</h1><h1 id = "rules">Rules</h1><h2 ng-click = "$storage.aboutModal = !$storage.aboutModal" id="closeBtn">X</h2>
+</div>
+        <div id="modalContent">
         <h4>ROSTER REQUIREMENTS:</h4><p>
           Rosters will consist of 9 players and must include players from at least 2 different NFL teams, and representing at least 2 different NFL games.  The 9 roster positions are: QB, RB1, RB2, WR1, WR2, WR3, TE, FLEX (RB/WR/TE), and DST.
         </p>
@@ -78,6 +77,7 @@
         <p>*Note: Points Allowed (PA) only includes points surrendered while DST is on the field - doesn't include points given up by team's offense (i.e. points off offensive turnovers).</p>
       </div>
     </div>
+    </div>
   </header></br>
   <div id="container">
     <div id="showSelector">
@@ -87,11 +87,10 @@
       <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'TE'}" ng-click="ctrl.setShow('TE')">Tight Ends</div>
       <div class = "togglePos" ng-class = "{'posActive': $storage.showPlayers == 'D'}" ng-click="ctrl.setShow('D')">Defense</div>
     </div>
-    <div ng-show="ctrl.optimized" class="animate-show optimized">
-      <div id="closeOptimized" ng-hide="!ctrl.optimized" ng-click="ctrl.closeOptimized()"><i class="fa fa-times" aria-hidden="true"></i>
-      </div>
+    <div class="optimized">
       <div id="lineupWrapper">
-        <div ng-repeat="player in ctrl.tempLineup"    class="optiPlayer">
+        <div ng-if="!ctrl.optimizeError">
+        <div ng-repeat="player in ctrl.tempLineup" class="optiPlayer">
             {{player.Position}}</br>
             {{player.Name}}</br>
             {{player.projection}}</br>
@@ -101,6 +100,10 @@
         </div>
         <div id='totals'>
         Team Projection: {{ctrl.totalProjection}}
+      </div>
+      </div>
+      <div id='totals' ng-if="ctrl.optimizeError">
+        ERROR: Insufficient players selected
       </div>
       </div>
     </div>
@@ -157,7 +160,6 @@
       <div id="bottomContent">
         <div id = "bottomItem">
           <div >
-            <div class = "bottomButtons" ng-click = 'ctrl.optimize()'>Optimize</div>
             <div class = "bottomButtons" ng-click = 'ctrl.addAll()'>Clear Filters</div>
           </div>
         </div>

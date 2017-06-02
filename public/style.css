@@ -15,6 +15,10 @@ h1{
   font-family: 'Special Elite', cursive;
   text-align: center;
 }
+h2{
+  font-family: 'Special Elite', cursive;
+  text-align: center;
+}
 .X{
   padding-right: 1px;
   cursor: pointer;
@@ -63,7 +67,7 @@ color: #FEFFEA;
   margin: 0;
   position: sticky;
   z-index: 100;
-  min-width: 785px;
+  min-width: 850px;
 }
 #football{
   cursor: pointer;
@@ -84,7 +88,7 @@ color: #FEFFEA;
   margin:  auto;
   padding-bottom: 15px;
   background-color: #C9C9C9;
-  min-width: 785px;
+  min-width: 850px;
 }
 #bottomContainer{
   width: 85%;
@@ -93,7 +97,7 @@ color: #FEFFEA;
   padding-bottom: 15px;
   background-color: #C9C9C9;
   border-bottom: 5px solid #FCFC62;
-  min-width: 785px;
+  min-width: 850px;
   font-family: 'Droid Serif', serif;
 }
 
@@ -105,7 +109,7 @@ color: #FEFFEA;
   padding-top: 10px;
   background-color: #424242;
   border-top: 3px solid #FCFC62;
-  min-width: 785px;
+  min-width: 850px;
 }
 #plus{
   color: #FCFC62;
@@ -145,7 +149,7 @@ color: #FEFFEA;
 #statsBox{
   margin: auto;
   width: 95%;
-  height: 500px;
+  height: 400px;
   overflow-y: scroll;
 }
 
@@ -182,7 +186,7 @@ color: #FEFFEA;
   padding-top: 10px;
   background-color: #424242;
   border-top: 3px solid #FCFC62;
-  min-width: 785px;
+  min-width: 850px;
 }
 
 .optiPlayer{
@@ -194,6 +198,7 @@ color: #FEFFEA;
 }
 
 #linupWrapper{
+  text-align: center;
   width: 100%;
 }
 
@@ -256,7 +261,7 @@ color: #FEFFEA;
 }
 
 .showPlayersBox{
-  height: 500px;
+  height: 400px;
   margin: auto;
   width: 100%;
   overflow: auto;
@@ -350,7 +355,24 @@ i{
 
 }
 
+#scoring{
+  color: #FEFFEA;
+  display: inline-block;
+
+}
+
+#rules{
+  color: #FCFC62;
+  display: inline-block;
+
+}
+
 /*MODAL*/
+
+h4{
+  color: #FCFC62;
+  text-shadow: 1px 1px #424242;
+}
 #note{
   list-style: none;
 }
@@ -370,8 +392,7 @@ i{
   width: 600px;
   border: 3px solid #424242;
   margin: 150px auto;
-  overflow: auto;
-  padding: 0px 20px 5px 20px;
+  /*padding: 0px 20px 5px 20px;*/
   color: #424242;
   font-family: 'Droid Serif', serif;
   font-size: 14px;
@@ -380,8 +401,17 @@ i{
   text-align: right;
 }
 
+#modalContent{
+  height: 535px;
+  padding: 10px;
+  overflow: auto;
+
+}
+
 #closeBtn {
-  color: #424242;
+  float: right;
+  padding-right: 15px;
+  color: #FCFC62;
   cursor: pointer;
   font-family: 'Special Elite', cursive;
   float: right;
@@ -389,7 +419,9 @@ i{
 }
 
 #modal-header {
+  margin: 0;
   text-align: center;
   font-family: 'Special Elite', cursive;
-  color: #FEFFEA;
+  background-color: #424242;
+  border-bottom: 4px solid #FCFC62;
 }
