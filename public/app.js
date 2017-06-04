@@ -131,16 +131,28 @@ app.controller('mainController', function($http, $scope, $localStorage){
   };
 
   this.findBestReplacement = function(replacements){
+    console.log(replacements);
     let replacementValues = [];
     let maxRV = 0;
-    let replacementIndex = 0;
+    let maxPts = 0;
+    let replacementIndex = 100;
     for(let i=0; i<replacements.length; i++){
       replacementValues.push((parseFloat(this.tempLineup[i].Salary)-parseFloat(replacements[i].Salary))/((parseFloat(this.tempLineup[i].projection)-parseFloat(replacements[i].projection))+1));
     }
-    for(let i=0; i<replacementValues.length; i++){
-      if(replacementValues[i]>maxRV){
-        maxRV = replacementValues[i];
+    console.log(this.totalBudget);
+    for(let i=0; i<replacements.length; i++){
+      if((parseInt(this.totalBudget) - parseInt(this.tempLineup[i].Salary) + parseInt(replacements[i].Salary) <= 50000) && (parseInt(this.tempLineup[i].projection)- parseInt(replacements[i].projection))>maxPts){
+        console.log("HERE");
+        maxPts = parseInt(this.tempLineup[i].projection)- parseInt(replacements[i].projection);
         replacementIndex = i;
+      }
+    }
+    if(replacementIndex == 100){
+      for(let i=0; i<replacementValues.length; i++){
+        if(replacementValues[i]>maxRV){
+          maxRV = replacementValues[i];
+          replacementIndex = i;
+        }
       }
     }
     return(replacementIndex);
@@ -343,20 +355,7 @@ app.controller('mainController', function($http, $scope, $localStorage){
 
   };
 
-  this.sortTableBy = function(sort){
-    if($localStorage.lastSort == sort){
-      $localStorage.sortby = sort;
-      $localStorage.sortAsc = true;
-      $localStorage.lastSort = '-'+sort;
-      $localStorage.sortCategory = sort.replace('-', '');
-    }else {
-      $localStorage.sortby = '-'+sort;
-      $localStorage.sortAsc = false;
-      $localStorage.lastSort = sort;
-      $localStorage.sortCategory = sort;
-      $localStorage.sortCategory = sort;
-    }
-  };
+
   controller = this;
   $http({
     method: 'GET',
