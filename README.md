@@ -1,6 +1,6 @@
 # DFS Optimizer
 
-A stock market simulator, joining Stocker creates a portfolio for you that tracks the stocks you buy, watch, and calculates the profit you make from the $10,000 we give you to begin with.
+A lineup optimization tool for daily fantasy football.  Sort through players and generate the optimal lineup based on player projections.
 
 https://dfsoptimizer.herokuapp.com/
 
